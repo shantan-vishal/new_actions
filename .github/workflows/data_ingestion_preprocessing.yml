@@ -1,0 +1,31 @@
+name: Data Ingestion and Preprocessing Pipeline
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 2 * * *'  # This will run the pipeline daily at 2 AM
+
+jobs:
+  data-ingestion-and-preprocessing:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        pip install pymongo pandas scikit-learn  # Install necessary libraries
+
+    - name: Run Data Ingestion Script
+      run: |
+        python ingest_data.py  # Execute the data ingestion script
+
+    - name: Run Data Preprocessing Script
+      run: |
+        python preprocess_data.py  # Execute the data preprocessing script
